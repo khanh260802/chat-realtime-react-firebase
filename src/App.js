@@ -6,9 +6,8 @@ import { Route, Routes, BrowserRouter, Navigate} from "react-router-dom";
 import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthProvider';
 function App() {
-  const currentUser = useContext(AuthContext);
-  console.log(currentUser)
 
+  const currentUser = useContext(AuthContext);
   const ProtectedRoute = ({children}) => {
     if( !currentUser ) {
       return (

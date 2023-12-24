@@ -148,6 +148,12 @@
                     position: relative;
                     width: 100%;
                     z-index: 1;
+                    .char { 
+                        font-weight: normal;
+                    }
+                    .highlight { 
+                        color: #8da4f1;
+                    }
                 }
             }
             .chats { 
