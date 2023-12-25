@@ -7,10 +7,10 @@ import { db } from '../firebase';
 import combineUIDs from './../utils/combineUIDs';
 
 const UserChat = ({user, pos, len, isSearch, lastmess}) => {
-  const {dispatch} = useContext(ChatContext); 
+  const {dispatch, chatData} = useContext(ChatContext); 
+  const userChose = chatData.user; 
   const currentUser = useContext(AuthContext);
   const handleSelect = async () => {
-    // get 
     const combineUID = combineUIDs(currentUser.uid, user.uid); 
     const docSnap = await getDoc(doc(db, "chats", combineUID)); 
     if(!docSnap.exists()) {
@@ -26,7 +26,7 @@ const UserChat = ({user, pos, len, isSearch, lastmess}) => {
     }
   }
   return (
-    <div className="user-chat" key={user.uid} onClick={handleSelect}>
+    <div className={`user-chat ${userChose.uid===user.uid ? 'active' : ''}`} key={user.uid} onClick={handleSelect}>
         <img className="img" src={user.photoURL} alt="" />
         <div className="info">
         <span className='name'>
@@ -34,10 +34,11 @@ const UserChat = ({user, pos, len, isSearch, lastmess}) => {
             user.displayName.split("").map((char, index) => {
             const oke = ( pos >= 0 && index >= pos && index < pos + len ) 
             return <b key={index} className={`${oke ? 'highlight' : ''} char`} >{char}</b>;
-            }) : user.displayName
+            }) : 
+            user.displayName
         }
         </span>
-          {lastmess && <p className='last-mess'>{lastmess}</p>}
+          {lastmess && <p className='last-mess'>{ `${lastmess?.owner?"Bạn: ": ""} ${lastmess?.text || lastmess?.img}` }</p> }
         </div>
     </div>
   )

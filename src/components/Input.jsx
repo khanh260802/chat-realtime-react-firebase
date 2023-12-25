@@ -15,6 +15,8 @@ const Input = () => {
   const {chatData, dispatch} = useContext(ChatContext); 
   const {user}= chatData; 
   const handleSend = async () => {
+
+    if(!mess && !file) return;
     setMess(''); 
     setFile(null); 
     const combineUID = combineUIDs(currentUser.uid, user.uid); 
@@ -26,7 +28,7 @@ const Input = () => {
       await uploadBytesResumable(storageRef, file);
       imgUrl = await getDownloadURL(storageRef);
     }
-    
+
     // for chats
     if(!docSnap.exists()) {
       await setDoc(doc(db, 'chats', combineUID), {

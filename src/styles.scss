@@ -169,7 +169,7 @@
                 padding: 10px;
                 cursor: pointer;
                 align-items: center;
-                &:hover { 
+                &:hover, &.active {
                     background-color: #2f2d52;
                 }
                 .img { 
@@ -184,6 +184,10 @@
                 }
                 .last-mess { 
                     font-size: 14px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    max-width: 200px;
                 }
             }
         }
@@ -213,10 +217,9 @@
                 background-color: #ddddf7;
                 overflow-y: auto;
                 display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
+                flex-direction: column-reverse;
                 padding: 10px ;
-                gap: 10px;
+                gap: 5px;
                 flex-grow: 1;
                 .message { 
                     display: flex;
@@ -250,6 +253,12 @@
                         img {
                             max-width: 40%;
                             object-fit: cover;
+                        }
+                        &.shift-right { 
+                            margin-right: 60px;
+                        }
+                        &.shift-left { 
+                            margin-left: 60px;
                         }
                     }
 

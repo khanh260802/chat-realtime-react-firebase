@@ -7,12 +7,12 @@ import ChatProvider from './contexts/ChatProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthProvider>
-    <ChatProvider>
-      <React.StrictMode>
-          <App />
-      </React.StrictMode>
-    </ChatProvider>
-  </AuthProvider>
+  <ChatProvider>
+    <AuthProvider>
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    </AuthProvider>
+  </ChatProvider>
 );
 
