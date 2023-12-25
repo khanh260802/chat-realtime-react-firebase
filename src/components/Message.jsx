@@ -1,15 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { ChatContext } from '../contexts/ChatProvider';
+import { AuthContext } from '../contexts/AuthProvider';
 
-const Message = () => {
+const Message = ({text, date, senderID, img}) => {
+  const currentUser = useContext(AuthContext);
+  const {chatData} = useContext(ChatContext); 
+  const {user} = chatData;
+  const isOwner = senderID !== user.uid; 
   return (
-    <div className='message owner'>
+    <div className={`message ${isOwner ?'owner' :''}`}>
       <div className="message-info">
-        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <img src={ isOwner ? currentUser.photoURL : user.photoURL} alt="" />
         <span>just now</span>
       </div>
       <div className="message-content">
-        <p>Hello Hello Hello HelloHelloHelloHelloHelloHelloHello</p>
-        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=600" alt="" />
+        <p>{text}</p>
+        {img && <img src={img} alt="" />}
       </div>
     </div>
   )

@@ -1,21 +1,24 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useEffect, useState } from 'react';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase';
 import containsVietnameseCharacter from './../utils/containsVietnameseCharacter';
 import removeDiacritics from '../utils/removeDiacritics';
+import { AuthContext } from './../contexts/AuthProvider';
+import UserChat from './UserChat';
 const Search = () => {
 
   const [users, setUsers] = useState([]);
   const [searchString, setSearchString] = useState(''); 
-
+  const currentUser = useContext(AuthContext);
+  
   useEffect(() => {
     async function getUsers() {
       const querySnapshot = await getDocs(collection(db, "users"));
       setUsers(querySnapshot.docs?.map(doc => {
         return doc.data(); 
       })?.filter((user) => {
-        if(!searchString) 
+        if(!searchString || user.uid === currentUser.uid) 
           return false; 
         const userName = user.displayName.toLowerCase(); 
         const subString = searchString.toLowerCase(); 
@@ -28,7 +31,7 @@ const Search = () => {
       }));
     }
     getUsers();
-  }, [searchString])
+  }, [searchString, currentUser]);
 
   return (
     <div className='search'>
@@ -36,27 +39,14 @@ const Search = () => {
       <div className="users-group">
         {
           users.map((user) => {
-          const clearName = removeDiacritics(user.displayName.toLowerCase()); 
-          const clearSubString = searchString.toLowerCase()
-          const id = containsVietnameseCharacter(searchString) ? 
-              user.displayName.toLowerCase().indexOf(clearSubString) : 
-              clearName.indexOf(clearSubString);
-          const len = searchString.length; 
-          console.log(id);
-          console.log(len);
-          return(
-              <div className="user-chat" key={user.uid}>
-                <img className="img" src={user.photoURL} alt="" />
-                <div className="info">
-                  <span className='name'>{
-                    user.displayName.split("").map((char, index) => {
-                      const oke = ( id >= 0 && index >= id && index < id + len ) 
-                      return <b key={index} className={`${oke ? 'highlight' : ''} char`} >{char}</b>;
-                    })
-                  }</span>
-                </div>
-              </div>
-            )
+            const clearName = removeDiacritics(user.displayName.toLowerCase()); 
+            const clearSubString = searchString.toLowerCase()
+            const pos = containsVietnameseCharacter(searchString) ? 
+                user.displayName.toLowerCase().indexOf(clearSubString) : 
+                clearName.indexOf(clearSubString);
+            const len = searchString.length; 
+
+            return <UserChat key={user.uid} user={user} pos={pos} len={len} isSearch={true}/>
           })
         }
       </div>

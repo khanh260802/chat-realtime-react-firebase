@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Add from '../img/add.png'; 
 import Cam from '../img/cam.png'; 
 import More from '../img/more.png'; 
 import Messages from './Messages';
 import Input from './Input';
-const Chat = () => {
+import { ChatContext } from '../contexts/ChatProvider';
+const ChatContainer = () => {
+  const {chatData} = useContext(ChatContext); 
+  const {user} = chatData; 
   return (
-    <div className='chat'>
+    <div className='chat-container'>
       <div className="chat-info">
-        <span> Khanh </span>
+        <span> {user?.displayName} </span>
         <div className="chat-icons">
           <img src={Cam} alt="" />
           <img src={Add} alt="" />
@@ -16,9 +19,9 @@ const Chat = () => {
         </div>
       </div>
       <Messages/>
-      <Input/>
+      <Input />
     </div>
   )
 }
 
-export default Chat
+export default ChatContainer
