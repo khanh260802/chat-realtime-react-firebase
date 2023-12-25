@@ -18,6 +18,7 @@ const Search = () => {
       setUsers(querySnapshot.docs?.map(doc => {
         return doc.data(); 
       })?.filter((user) => {
+        if(searchString==='all') return true; 
         if(!searchString || user.uid === currentUser.uid) 
           return false; 
         const userName = user.displayName.toLowerCase(); 
@@ -35,7 +36,7 @@ const Search = () => {
 
   return (
     <div className='search'>
-      <input value={searchString} onChange={(e)=> setSearchString(e.target.value)} type="text" className="search-input" placeholder='Find the user'/>
+      <input value={searchString} onChange={(e)=> setSearchString(e.target.value)} type="text" className="search-input" placeholder="Find the user (type 'all' to show all users)"/>
       <div className="users-group">
         {
           users.map((user) => {
