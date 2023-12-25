@@ -15,8 +15,7 @@ const Input = () => {
   const {chatData, dispatch} = useContext(ChatContext); 
   const {user}= chatData; 
   const handleSend = async () => {
-
-    if(!mess && !file) return;
+    if((!mess && !file) || (Object.keys(user).length === 0)) return;
     setMess(''); 
     setFile(null); 
     const combineUID = combineUIDs(currentUser.uid, user.uid); 
