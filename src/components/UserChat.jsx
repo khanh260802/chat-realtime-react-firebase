@@ -6,11 +6,12 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import combineUIDs from './../utils/combineUIDs';
 
-const UserChat = ({user, pos, len, isSearch, lastmess}) => {
+const UserChat = ({user, pos, len, isSearch, lastmess, setSearchString}) => {
   const {dispatch, chatData} = useContext(ChatContext); 
   const userChose = chatData.user; 
   const currentUser = useContext(AuthContext);
   const handleSelect = async () => {
+    setSearchString?.(''); 
     const combineUID = combineUIDs(currentUser.uid, user.uid); 
     const docSnap = await getDoc(doc(db, "chats", combineUID)); 
     if(!docSnap.exists()) {

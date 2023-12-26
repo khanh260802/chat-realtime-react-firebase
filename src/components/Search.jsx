@@ -47,7 +47,7 @@ const Search = () => {
                 clearName.indexOf(clearSubString);
             const len = searchString.length; 
 
-            return <UserChat key={user.uid} user={user} pos={pos} len={len} isSearch={true}/>
+            return <UserChat key={user.uid} user={user} pos={pos} len={len} isSearch={true} setSearchString={setSearchString}/>
           })
         }
       </div>

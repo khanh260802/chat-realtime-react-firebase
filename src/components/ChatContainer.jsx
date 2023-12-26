@@ -8,7 +8,7 @@ import { ChatContext } from '../contexts/ChatProvider';
 const ChatContainer = () => {
   const {chatData} = useContext(ChatContext); 
   const {user} = chatData; 
-  return (
+  return ( Object.keys(user).length > 0 ?
     <div className='chat-container'>
       <div className="chat-info">
         <span> {user?.displayName} </span>
@@ -20,6 +20,11 @@ const ChatContainer = () => {
       </div>
       <Messages/>
       <Input />
+    </div> : 
+    <div className='chat-container'>
+      <div className='no-choose'> 
+        <h1> Choose an conversation! </h1>  
+      </div>
     </div>
   )
 }
