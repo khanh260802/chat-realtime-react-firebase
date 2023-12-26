@@ -22,7 +22,7 @@ const Register = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password); 
       const user = userCredential.user;
       const date = new Date().getTime();
-      let imgUrl = ""; 
+      let imgUrl = "https://firebasestorage.googleapis.com/v0/b/khanh-hoc-code.appspot.com/o/avatar-default.png?alt=media&token=de1491ed-6f66-480a-b7e4-af53ea538d36"; 
       if(file) {
         const storageRef = ref(storage, name+""+date );
         await uploadBytesResumable(storageRef, file);
@@ -31,13 +31,13 @@ const Register = () => {
       
       await updateProfile(user, {
         displayName: name, 
-        ...(file && { photoURL: imgUrl }),
+        photoURL: imgUrl,
       })
       await setDoc(doc(db, "users", user.uid), {
         uid: user.uid,
         displayName: name, 
         email,
-        ...(file && { photoURL: imgUrl }),
+        photoURL: imgUrl,
       })
       await setDoc(doc(db, "userChats", user.uid), {})
       setLoading(false)
