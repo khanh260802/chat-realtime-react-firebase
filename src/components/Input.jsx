@@ -85,11 +85,14 @@ const Input = () => {
     })
   }
   return (
-    <div className="input">
-      <input value={mess} type="text" placeholder='Type something...' onChange={(e)=>setMess(e.target.value)} onKeyDown={(e)=>{
-        if(e.key === 'Enter')   
-          handleSend(); 
-      }}/>
+    <div className="input-container">
+      <div className="input">
+        <input value={mess} type="text" placeholder='Type something...' onChange={(e)=>setMess(e.target.value)} onKeyDown={(e)=>{
+          if(e.key === 'Enter')   
+            handleSend(); 
+        }}/>
+        {file && <img src={URL.createObjectURL(file)} alt="" className='img'/>}
+      </div>
       <div className="send">
         <img src={Attach} alt="" />
         <input  style={{display:'none'}} type="file" id='file' onChange={(e)=>setFile(e.target.files[0])}/>

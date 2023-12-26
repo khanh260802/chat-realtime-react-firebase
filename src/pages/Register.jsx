@@ -70,6 +70,7 @@ const Register = () => {
           <label htmlFor='file' className='lable-file'>
             <img src={Add} alt="" className='img'/>
             <span>Add an avatar</span>
+            {file && <img src={URL.createObjectURL(file)} alt='' className='preview-avatar'/>}
           </label>
           <button className='button'>Sign Up</button>
         </form>
